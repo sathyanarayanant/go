@@ -20,7 +20,6 @@ func incrementAndGet() uint64 {
 func serve(w http.ResponseWriter, r *http.Request) {
 	t0 := time.Now()
 	requestNo := incrementAndGet()
-	time.Sleep(5 * time.Second)
 
 	t1 := time.Now()
 	output := fmt.Sprintf("Hello world. Request no: %v, Completed in %v", requestNo, t1.Sub(t0))
@@ -29,5 +28,5 @@ func serve(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	http.HandleFunc("/", serve)
-	http.ListenAndServe(":8080"52.5.157.94, nil)
+	http.ListenAndServe(":8080", nil)
 }
