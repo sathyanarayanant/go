@@ -56,18 +56,31 @@ func getRandomString(n int) string {
 }
 
 func main() {
+
 	//initialise logging
 	file, err := os.OpenFile("http-test-server.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
-		fmt.Println("unable to open logging. exiting...")
+		fmt.Println("unable to open log file. exiting...")
 		return
 	}
 
 	multi := io.MultiWriter(file, os.Stdout)
-
 	logHandle = log.New(multi, "", log.Ldate|log.Lmicroseconds|log.Lshortfile)
-	logHandle.Println("http-test-server listening in 8080")
 
-	http.HandleFunc("/", serve)
-	http.ListenAndServe(":8080", nil)
+	if len(os.Args) < 2 {
+		logHandle.Println("Incorrect usage. First command argument should be port. Exiting...")
+		os.Exit(-1)
+	}
+
+	port := os.Args[1]
+
+	if _, err := strconv.Atoi(port); err != nil {
+		logHandle.Printf("Port %v is not an int. Exiting...", port)
+		os.Exit(-1)
+	}
+
+	logHandle.Printf("http-test-server listening in %v", port)
+
+	http.HandleFunc("/content", serve)
+	http.ListenAndServe(":"+port, nil)
 }
