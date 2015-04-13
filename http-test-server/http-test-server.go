@@ -29,7 +29,6 @@ func serve(w http.ResponseWriter, r *http.Request) {
 	t0 := time.Now()
 	//requestNo := incrementAndGet()
 
-	t1 := time.Now()
 	n, err := strconv.Atoi(r.URL.Query().Get("n"))
 	if err != nil {
 		logMessage := fmt.Sprintf("Invalid n. err message: %v", err)
@@ -39,6 +38,7 @@ func serve(w http.ResponseWriter, r *http.Request) {
 	}
 
 	output := getRandomString(n)
+	t1 := time.Now()
 	logMessage := fmt.Sprintf("Received request. n: %v, Completed in %v", n, t1.Sub(t0))
 
 	fmt.Fprintln(w, output)
