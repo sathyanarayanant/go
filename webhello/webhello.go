@@ -29,5 +29,5 @@ func serve(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	http.HandleFunc("/", serve)
-	http.ListenAndServe(":8080"52.5.157.94, nil)
+	http.ListenAndServe(":8080", nil)
 }
